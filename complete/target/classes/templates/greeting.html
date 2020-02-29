@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style> 
+            table { 
+                border-collapse: collapse; 
+            } 
+            th { 
+                background-color:green; 
+                Color:white; 
+            } 
+            th, td { 
+                width:150px; 
+                text-align:center; 
+                border:1px solid black; 
+                padding:5px 
+              
+            } 
+            .geeks { 
+                border-right:hidden; 
+            } 
+            .gfg { 
+                border-collapse:separate; 
+                border-spacing:0 15px; 
+            } 
+            h1 { 
+                color:green; 
+            } 
+        </style> 
+</head>
+<body>
+    <!--  <p th:text="'Hello, ' + ${name} + '!'" />-->
+    
+    <font size="7">
+    <table style="margin-left:auto;margin-right:auto;">
+      <tr>
+        <th><strong>NAME</strong></th>
+        <th><strong>LATITUDE</strong></th>
+        <th><strong>LONGITUDE</strong></th>
+      </tr>
+      <tr th:each="infoSpecific : ${planes}">
+        <td align="center" th:text="${infoSpecific.name}"></td>
+        <td align="center" th:text="${infoSpecific.lat}"></td>
+        <td align="center" th:text="${infoSpecific.longe}"></td>
+      </tr>
+    </table>
+    </font>
+</body>
+</html>
