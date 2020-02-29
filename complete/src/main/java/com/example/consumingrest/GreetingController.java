@@ -1,4 +1,5 @@
 package com.example.consumingrest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,18 +22,33 @@ import org.springframework.web.client.RestTemplate;
 @Component
 @RestController
 public class GreetingController {
+	
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+	
+	private static final Logger log = LoggerFactory.getLogger(ConsumingRestApplication.class);
 
+	@Scheduled(fixedRate = 5000)
+	public void getArrivalInfo() {
+		log.info("Fetching updated info....");
+		List<Arrival> arrivals = getArrivals();
+	}
 
 	static RestTemplate restTemplate = new RestTemplate();
-	@RequestMapping(value="/state",  method = RequestMethod.GET)
-	public String Teams () {
+	
+	public List<Arrival> getArrivals(){
 		ResponseEntity<List<Arrival>> responses = restTemplate.exchange(
 				"https://USERNAME:PASSWORD@opensky-network.org/api/flights/departure?airport=EDDF&begin=1517230000&end=1517230800",
 				HttpMethod.GET,
 				  null,
 				  new ParameterizedTypeReference<List<Arrival>>(){});
-		List<Arrival> arrival = responses.getBody();
-		System.out.print("RESPONSES :" + responses.getBody());
+		List<Arrival> arrivals = responses.getBody();
+		return arrivals;
+		
+	}
+	@RequestMapping(value="/state",  method = RequestMethod.GET)
+	public String Teams () {
+		List<Arrival> arrival = getArrivals();
+		System.out.print("RESPONSES :" + getArrivals());
 		String html = "<table>\n" + 
 				"  <tr>\n" + 
 				"    <th>PlaneID </th>\n" + 
