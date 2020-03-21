@@ -19,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@SpringBootApplication
+@EnableScheduling
 @Component
 @RestController
-public class GreetingController {
+public class ArrivalController {
 	@Autowired
-	private UserRepository userRepository;
+	private ArrivalRepository arrivalRepository;
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -34,6 +38,9 @@ public class GreetingController {
 	public void getArrivalInfo() {
 		log.info("Fetching updated info....");
 		List<Arrival> arrivals = getArrivals();
+		for(int i=0;i<arrivals.size();i++) {
+			arrivalRepository.save(arrivals.get(i));
+			}
 		log.info("UPDATE :" + arrivals);
 	}
 
@@ -46,16 +53,42 @@ public class GreetingController {
 				null,
 				new ParameterizedTypeReference<List<Arrival>>(){});
 		List<Arrival> arrivals = responses.getBody();
-		for(int i=0;i<arrivals.size();i++) {
-		userRepository.save(arrivals.get(i));
-		}
+
 		return arrivals;
 
 	}
 
-	@RequestMapping(value="/state",  method = RequestMethod.GET)
-	public String Teams () {
+	@RequestMapping(value="/arrivals",  method = RequestMethod.GET)
+	public String Arrivals () {
 		List<Arrival> arrival = getArrivals();
+		
+		String html = "<table>\n" + 
+				"  <tr>\n" + 
+				"    <th>PlaneID </th>\n" + 
+				"    <th>Callsign </th>\n" + 
+				"    <th>Departure Airport </th>\n" + 
+				"    <th>Arrival Airport </th>\n" +
+				"  </tr>\n" ;
+		for(int i=0;i<arrival.size();i++) {
+
+			html += "<tr>\n" +
+					"<td>" + arrival.get(i).getIcao24() + "</td>" +
+					"<td>" + arrival.get(i).getCallsign() + "</td>" +
+					"<td>" + arrival.get(i).getEstDepartureAirport() + "</td>" +
+					"<td>" + arrival.get(i).getEstArrivalAirport() + "</td>" +
+					"</tr>\n";	
+		}
+		html += "</table>";
+
+
+		return html;	
+	}
+
+	@RequestMapping(value="/stored_arrivals",  method = RequestMethod.GET)
+	public String StoredArrivals() {
+
+		List<Arrival> arrival = new ArrayList<Arrival>();
+		arrivalRepository.findAll().forEach(arrival::add);
 		
 		String html = "<table>\n" + 
 				"  <tr>\n" + 

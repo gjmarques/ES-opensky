@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ConsumingRestApplication<consuming-rest>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.example.consumingrest.ConsumingRestApplication",
+            "projectName": "consuming-rest",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SchedulingTasksApplication<consuming-rest>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.example.consumingrest.SchedulingTasksApplication",
+            "projectName": "consuming-rest",
+            "args": ""
+        }
+    ]
+}
