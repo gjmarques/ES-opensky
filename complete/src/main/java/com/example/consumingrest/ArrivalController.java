@@ -22,17 +22,25 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Component
 @RestController
 public class ArrivalController {
+
 	@Autowired
 	private ArrivalRepository arrivalRepository;
+
+	@Autowired
+	KafkaProducer producer;
+
+	@Autowired
+	MessageStorage storage;
 
 
 	private static final Logger log = LoggerFactory.getLogger(ConsumingRestApplication.class);
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 20000)
 	public void getArrivalInfo() {
 		log.info("Fetching updated info....");
 		List<Arrival> arrivals = getArrivals();
 		for(int i=0;i<arrivals.size();i++) {
+			producers("Arrival "+ arrivals.get(i).getIcao24()  +" added");
 			arrivalRepository.save(arrivals.get(i));
 			}
 		log.info("UPDATE :" + arrivals);
@@ -104,6 +112,20 @@ public class ArrivalController {
 
 
 		return html;	
+	}
+
+	@RequestMapping(value="/consumer",  method = RequestMethod.GET)
+	public String getAllRecievedMessage(){
+	  String messages = storage.toString();
+		String html ="<table>\n <tr>\n <th> Arrival Additions PlaneID </th>\n  </tr>\n";
+			html += "<tr>\n" +"<td>" + messages + "</td>" +	"</tr>\n";
+			html += "</table>";
+		return html;	
+	}	
+
+	public void producers(String data){
+		producer.send(data);
+		storage.put(data);
 	}
 
 }
