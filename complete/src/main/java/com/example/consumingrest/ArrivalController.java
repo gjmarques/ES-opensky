@@ -1,5 +1,4 @@
 package com.example.consumingrest;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +10,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,7 +25,6 @@ public class ArrivalController {
 	@Autowired
 	private ArrivalRepository arrivalRepository;
 
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	private static final Logger log = LoggerFactory.getLogger(ConsumingRestApplication.class);
 
