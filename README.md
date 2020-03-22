@@ -1,5 +1,8 @@
 # ES-opensky group ->L38(P3)
 
+Gonçalo Marques nº80327
+Fábio Nunes nº80109
+
 ES-opensky is a web-site that displays real-time data concerning arrivals on Frankfurt international airport. 
 For the backend we used Springboot(java) and create a docker which contains a container that runs a mysql database(see the commands below)
 
@@ -48,6 +51,10 @@ To run the app run the following commands by order:
 **3- RUN API:**
 **May vary depending on chosen IDE:**
 -----------------------------------------------
+Open the complete/ folder in a terminal and run:
+
+> mvn clean compile
+
 
 Go to the complete/src/main/java/com/example/consumingrest folder
 which contains the ConsumingRestApplication.java (main class) and run it (on VS Code right click on the file and RUN)

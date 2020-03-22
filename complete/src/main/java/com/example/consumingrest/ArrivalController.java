@@ -35,7 +35,7 @@ public class ArrivalController {
 
 	private static final Logger log = LoggerFactory.getLogger(ConsumingRestApplication.class);
 
-	@Scheduled(fixedRate = 20000)
+	@Scheduled(fixedRate = 10000)
 	public void getArrivalInfo() {
 		log.info("Fetching updated info....");
 		List<Arrival> arrivals = getArrivals();

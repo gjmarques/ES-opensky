@@ -1,8 +1,0 @@
-com/example/consumingrest/ConsumingRestApplication.class
-com/example/consumingrest/KafkaConsumer.class
-com/example/consumingrest/ArrivalRepository.class
-com/example/consumingrest/KafkaProducer.class
-com/example/consumingrest/ArrivalController.class
-com/example/consumingrest/ArrivalController$1.class
-com/example/consumingrest/MessageStorage.class
-com/example/consumingrest/Arrival.class
